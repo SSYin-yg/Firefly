@@ -6,8 +6,10 @@ backend:
   branch: master
   base_url: https://cms.ssyin033.top
 
-media_folder: "public"
-public_folder: "/"
+# 前端栶壁纸、头像、logo 等栶主要在 src/assets/images
+# 新上传的图片也会保存到这里
+media_folder: "src/assets/images"
+public_folder: "/src/assets/images"
 
 collections:
   # 文章
@@ -119,7 +121,6 @@ collections:
               - { label: "透明覆盖", value: "overlay" }
               - { label: "纯色背景", value: "none" }
 
-      # 高级：直接编辑原始 TS 配置（不建议普通用户使用）
       - name: "siteConfig"
         label: "[高级] siteConfig.ts"
         file: "src/config/siteConfig.ts"
