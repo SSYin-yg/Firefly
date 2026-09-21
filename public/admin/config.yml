@@ -7,11 +7,11 @@ backend:
   base_url: https://cms.ssyin033.top
 
 # 包含 public 下所有图片（assets、gallery、favicon、pio 等）
-# 子文件夹会作为分类显示
 media_folder: "public"
 public_folder: "/"
 
 collections:
+  # 文章
   - name: "posts"
     label: "文章"
     label_singular: "文章"
@@ -33,6 +33,7 @@ collections:
       - { label: "允许评论", name: "comment", widget: "boolean", default: true }
       - { label: "正文", name: "body", widget: "markdown" }
 
+  # 动态
   - name: "dynamic"
     label: "动态"
     label_singular: "动态"
@@ -47,3 +48,45 @@ collections:
       - { label: "置顶", name: "pinned", widget: "boolean", default: false }
       - { label: "位置", name: "location", widget: "string", required: false }
       - { label: "内容", name: "body", widget: "markdown" }
+
+  # 界面设置（布局、侧边栏、壁纸、主题等）
+  - name: "ui-settings"
+    label: "界面设置"
+    label_singular: "配置文件"
+    editor:
+      preview: false
+    files:
+      - name: "siteConfig"
+        label: "站点基础设置（主题色、宽度、卡片样式等）"
+        file: "src/config/siteConfig.ts"
+        format: "raw"
+        fields:
+          - { name: "body", label: "配置内容", widget: "code", default_language: "typescript", allow_language_selection: false, output_code_only: true }
+
+      - name: "sidebarConfig"
+        label: "侧边栏布局（left / right / both）"
+        file: "src/config/sidebarConfig.ts"
+        format: "raw"
+        fields:
+          - { name: "body", label: "配置内容", widget: "code", default_language: "typescript", allow_language_selection: false, output_code_only: true }
+
+      - name: "backgroundWallpaper"
+        label: "壁纸模式与背景"
+        file: "src/config/backgroundWallpaper.ts"
+        format: "raw"
+        fields:
+          - { name: "body", label: "配置内容", widget: "code", default_language: "typescript", allow_language_selection: false, output_code_only: true }
+
+      - name: "displaySettingsConfig"
+        label: "前台设置面板开关"
+        file: "src/config/displaySettingsConfig.ts"
+        format: "raw"
+        fields:
+          - { name: "body", label: "配置内容", widget: "code", default_language: "typescript", allow_language_selection: false, output_code_only: true }
+
+      - name: "navBarConfig"
+        label: "导航栏配置"
+        file: "src/config/navBarConfig.ts"
+        format: "raw"
+        fields:
+          - { name: "body", label: "配置内容", widget: "code", default_language: "typescript", allow_language_selection: false, output_code_only: true }
