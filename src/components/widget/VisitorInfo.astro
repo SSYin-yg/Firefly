@@ -207,39 +207,6 @@ const showTitle = widgetConfig?.showTitle !== false;
     color: rgb(190 190 190);
   }
 
-  .visitor-info-loading,
-  .visitor-info-error {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    min-height: 5rem;
-    padding: 0.75rem;
-    border-radius: 0.625rem;
-    color: rgb(115 115 115);
-    font-size: 0.78rem;
-  }
-
-  :global(.dark) .visitor-info-loading,
-  :global(.dark) .visitor-info-error {
-    color: rgb(190 190 190);
-  }
-
-  .visitor-info-spinner {
-    width: 1rem;
-    height: 1rem;
-    border: 2px solid rgb(128 128 128 / 0.22);
-    border-top-color: var(--primary);
-    border-radius: 9999px;
-    animation: visitor-info-spin 700ms linear infinite;
-  }
-
-  @keyframes visitor-info-spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
   @media (max-width: 480px) {
     .visitor-info-grid {
       grid-template-columns: 1fr;
@@ -269,10 +236,8 @@ const showTitle = widgetConfig?.showTitle !== false;
   };
 
   const setupVisitorInfo = (root: Element) => {
-    const loading = root.querySelector(".visitor-info-loading");
-    const error = root.querySelector(".visitor-info-error");
     const data = root.querySelector(".visitor-info-data");
-    if (!loading || !error || !data) return;
+    if (!data) return;
 
     // User Agent / 设备 / 浏览器属于浏览器本地信息，不依赖第三方 API。
     // 先展示这部分，即使 IP 地理服务临时不可用，部件也不会整体失败。
@@ -374,18 +339,13 @@ const showTitle = widgetConfig?.showTitle !== false;
           }
         }
 
-        loading.classList.add("hidden");
-        data.classList.remove("hidden");
         root.querySelector(".visitor-info-content")?.setAttribute("data-state", "ready");
       } catch {
-        // Worker/API 异常时仍保留本地浏览器信息。
+        // API 临时异常时只更新数据字段，不再显示旧的“无法获取”提示面板。
         setText(".visitor-ip", "暂不可用");
         setText(".visitor-location", "暂不可用");
         setText(".visitor-timezone", "暂不可用");
         setText(".visitor-network", "暂不可用");
-        loading.classList.add("hidden");
-        data.classList.remove("hidden");
-        error.classList.add("hidden");
         root.querySelector(".visitor-info-content")?.setAttribute("data-state", "partial");
       } finally {
         window.clearTimeout(timer);
