@@ -6,7 +6,6 @@ backend:
   branch: master
   base_url: https://cms.ssyin033.top
 
-# 包含 public 下所有图片（assets、gallery、favicon、pio 等）
 media_folder: "public"
 public_folder: "/"
 
@@ -49,44 +48,95 @@ collections:
       - { label: "位置", name: "location", widget: "string", required: false }
       - { label: "内容", name: "body", widget: "markdown" }
 
-  # 界面设置（布局、侧边栏、壁纸、主题等）
+  # 界面设置（下拉 + 调色）
   - name: "ui-settings"
     label: "界面设置"
-    label_singular: "配置文件"
+    label_singular: "设置"
     editor:
       preview: false
     files:
+      - name: "uiSettings"
+        label: "布局与配色（推荐使用）"
+        file: "src/config/uiSettings.json"
+        format: "json"
+        fields:
+          - label: "主题色相 (0-360)"
+            name: "themeHue"
+            widget: "number"
+            min: 0
+            max: 360
+            step: 1
+            hint: "红色0，青色200，蓝绿250，粉色345，当前默认165"
+
+          - label: "默认亮暗模式"
+            name: "defaultMode"
+            widget: "select"
+            options:
+              - { label: "跟随系统", value: "system" }
+              - { label: "亮色", value: "light" }
+              - { label: "暗色", value: "dark" }
+
+          - label: "页面宽度 (rem)"
+            name: "pageWidth"
+            widget: "number"
+            min: 60
+            max: 140
+            step: 5
+
+          - label: "卡片边框与阴影"
+            name: "cardBorder"
+            widget: "boolean"
+
+          - label: "卡片跟随主题色"
+            name: "cardFollowTheme"
+            widget: "boolean"
+
+          - label: "侧边栏位置"
+            name: "sidebarPosition"
+            widget: "select"
+            options:
+              - { label: "仅左侧", value: "left" }
+              - { label: "仅右侧", value: "right" }
+              - { label: "双侧边栏", value: "both" }
+
+          - label: "平板端显示哪侧侧边栏"
+            name: "tabletSidebar"
+            widget: "select"
+            options:
+              - { label: "左侧", value: "left" }
+              - { label: "右侧", value: "right" }
+
+          - label: "文章页隐藏侧边栏"
+            name: "hideSidebarOnPostPage"
+            widget: "boolean"
+
+          - label: "壁纸模式"
+            name: "wallpaperMode"
+            widget: "select"
+            options:
+              - { label: "横幅壁纸", value: "banner" }
+              - { label: "全屏壁纸", value: "fullscreen" }
+              - { label: "透明覆盖", value: "overlay" }
+              - { label: "纯色背景", value: "none" }
+
+      # 高级：直接编辑原始 TS 配置（不建议普通用户使用）
       - name: "siteConfig"
-        label: "站点基础设置（主题色、宽度、卡片样式等）"
+        label: "[高级] siteConfig.ts"
         file: "src/config/siteConfig.ts"
         format: "raw"
         fields:
           - { name: "body", label: "配置内容", widget: "code", default_language: "typescript", allow_language_selection: false, output_code_only: true }
 
       - name: "sidebarConfig"
-        label: "侧边栏布局（left / right / both）"
+        label: "[高级] sidebarConfig.ts"
         file: "src/config/sidebarConfig.ts"
         format: "raw"
         fields:
           - { name: "body", label: "配置内容", widget: "code", default_language: "typescript", allow_language_selection: false, output_code_only: true }
 
       - name: "backgroundWallpaper"
-        label: "壁纸模式与背景"
+        label: "[高级] backgroundWallpaper.ts"
         file: "src/config/backgroundWallpaper.ts"
-        format: "raw"
-        fields:
-          - { name: "body", label: "配置内容", widget: "code", default_language: "typescript", allow_language_selection: false, output_code_only: true }
-
-      - name: "displaySettingsConfig"
-        label: "前台设置面板开关"
-        file: "src/config/displaySettingsConfig.ts"
-        format: "raw"
-        fields:
-          - { name: "body", label: "配置内容", widget: "code", default_language: "typescript", allow_language_selection: false, output_code_only: true }
-
-      - name: "navBarConfig"
-        label: "导航栏配置"
-        file: "src/config/navBarConfig.ts"
         format: "raw"
         fields:
           - { name: "body", label: "配置内容", widget: "code", default_language: "typescript", allow_language_selection: false, output_code_only: true }
