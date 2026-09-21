@@ -81,11 +81,47 @@ export const siteConfig: SiteConfig = {
 		navbarMode: "dynamic",
 	},
 	// Markdown Callout 配置：astro.config.mjs 会读取此节点
+	postListLayout: {
+		defaultMode: "list",
+		mobileDefaultMode: "list",
+		coverPosition: "right",
+		descriptionLines: 2,
+		showStatsIcons: true,
+		tagsPosition: "meta",
+		tagsBottomStyle: "chip",
+		meta: {
+			showPublished: true,
+			showCategory: true,
+			showTags: true,
+			showWords: true,
+			showReadingTime: true,
+		},
+		stats: {
+			showPublished: true,
+			showWords: true,
+			showReadingTime: true,
+		},
+		grid: {
+			masonry: false,
+			columnWidth: 320,
+			coverFullWidth: false,
+		},
+	},
 	post: {
 		rehypeCallouts: {
 			theme: "github",
 			enablePythonMarkdownAdmonitions: true,
 		},
+		showLastModified: false,
+		outdatedThreshold: 30,
+		share: true,
+		postNavigation: true,
+		relatedPosts: true,
+		randomPosts: false,
+		generateOgImages: false,
+	},
+	pagination: {
+		postsPerPage: 10,
 	},
 	lang: SITE_LANG,
 	pages,
