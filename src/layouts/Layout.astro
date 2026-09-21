@@ -254,7 +254,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content={`hsl(${siteConfig.themeColor.hue} 90% 60%)`} />
+    <meta name="theme-color" content={uiSettings.themeColor || "#00c9a7"} />
     {
       favicons.map((favicon) => (
         <link
@@ -444,6 +444,19 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
         ? "oklch(0.70 0.14 " + storedHue + ")"
         : cmsThemeColor;
       document.documentElement.style.setProperty("--theme-color", resolvedThemeColor);
+
+      // CMS 调色盘使用灰度色（如 #ffffff）时，不再仅用 Hue=0 强行生成红色系辅助色。
+      // 灰度主题保持无彩色；用户前台主动拖动 Hue 后恢复彩色主题。
+      const normalizedCmsColor = String(cmsThemeColor).trim().toLowerCase();
+      const cmsHexMatch = /^#?([0-9a-f]{6})$/.exec(normalizedCmsColor);
+      const cmsIsAchromatic =
+        !!cmsHexMatch &&
+        cmsHexMatch[1].slice(0, 2) === cmsHexMatch[1].slice(2, 4) &&
+        cmsHexMatch[1].slice(2, 4) === cmsHexMatch[1].slice(4, 6);
+      document.documentElement.style.setProperty(
+        "--theme-chroma-scale",
+        storedHue ? "1" : cmsIsAchromatic ? "0" : "1",
+      );
 
       // 设置卡片透明度（全屏透明模式下使用），优先使用用户自定义值
       const storedCardOpacity = localStorage.getItem("overlayCardOpacity");
