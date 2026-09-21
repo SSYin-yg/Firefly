@@ -63,7 +63,16 @@ const showThemeColor = displaySettingsConfig.themeColorSwitchable;
 const isWallpaperSwitchable = displaySettingsConfig.wallpaperModeSwitchable;
 const allowLayoutSwitch = displaySettingsConfig.layoutSwitchable;
 const hasDisplaySettings =
-	showThemeColor || isWallpaperSwitchable || allowLayoutSwitch;
+	isDisplaySettingsEnabled &&
+	(showThemeColor ||
+		isWallpaperSwitchable ||
+		allowLayoutSwitch ||
+		displaySettingsConfig.sakuraSwitchable ||
+		displaySettingsConfig.wavesSwitchable ||
+		displaySettingsConfig.gradientSwitchable ||
+		displaySettingsConfig.bannerTitleSwitchable ||
+		displaySettingsConfig.bannerCarouselSwitchable ||
+		displaySettingsConfig.overlaySwitchable !== false);
 
 // 解析导航栏链接（按 siteConfig.pages 过滤 + i18n 名称），桌面下拉与移动抽屉共用
 const links: NavBarLink[] = resolveNavMenuLinks();
