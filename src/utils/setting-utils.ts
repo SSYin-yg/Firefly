@@ -88,6 +88,8 @@ export function setHue(hue: number): void {
 		return;
 	}
 	r.style.setProperty("--hue", String(hue));
+	// 用户主动拖动 Hue 时，主色切换到运行时生成色；后台默认色在未操作时保持原始 HEX。
+	r.style.setProperty("--theme-color", "oklch(0.70 0.14 " + hue + ")");
 }
 
 export function applyThemeToDocument(theme: LIGHT_DARK_MODE): void {
