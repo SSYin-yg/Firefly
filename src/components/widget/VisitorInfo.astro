@@ -149,6 +149,7 @@ const showTitle = widgetConfig?.showTitle !== false;
     border-radius: 0.5rem;
     color: var(--primary);
     background: rgb(128 128 128 / 0.08);
+    font-size: 1.05rem;
   }
 
   .visitor-info-icon svg {
@@ -170,8 +171,8 @@ const showTitle = widgetConfig?.showTitle !== false;
     color: rgb(115 115 115);
   }
 
-  .dark .visitor-info-label {
-    color: rgb(163 163 163);
+  :global(.dark) .visitor-info-label {
+    color: rgb(190 190 190);
   }
 
   .visitor-info-value {
@@ -185,8 +186,8 @@ const showTitle = widgetConfig?.showTitle !== false;
     color: rgb(38 38 38);
   }
 
-  .dark .visitor-info-value {
-    color: rgb(245 245 245);
+  :global(.dark) .visitor-info-value {
+    color: rgb(255 255 255);
   }
 
   .visitor-info-note {
@@ -202,8 +203,8 @@ const showTitle = widgetConfig?.showTitle !== false;
     background: rgb(128 128 128 / 0.045);
   }
 
-  .dark .visitor-info-note {
-    color: rgb(163 163 163);
+  :global(.dark) .visitor-info-note {
+    color: rgb(190 190 190);
   }
 
   .visitor-info-loading,
@@ -219,9 +220,9 @@ const showTitle = widgetConfig?.showTitle !== false;
     font-size: 0.78rem;
   }
 
-  .dark .visitor-info-loading,
-  .dark .visitor-info-error {
-    color: rgb(163 163 163);
+  :global(.dark) .visitor-info-loading,
+  :global(.dark) .visitor-info-error {
+    color: rgb(190 190 190);
   }
 
   .visitor-info-spinner {
