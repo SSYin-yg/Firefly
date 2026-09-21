@@ -324,9 +324,16 @@ function resetHue() {
 	localStorage.removeItem("hue");
 	hue = getDefaultHue();
 	document.documentElement.style.setProperty("--hue", String(defaultHue));
+	const resetThemeColor = uiSettings.themeColor || "#00c9a7";
+	document.documentElement.style.setProperty("--theme-color", resetThemeColor);
+	const resetColorMatch = /^#?([0-9a-f]{6})$/i.exec(resetThemeColor.trim());
+	const resetIsAchromatic =
+		!!resetColorMatch &&
+		resetColorMatch[1].slice(0, 2).toLowerCase() === resetColorMatch[1].slice(2, 4).toLowerCase() &&
+		resetColorMatch[1].slice(2, 4).toLowerCase() === resetColorMatch[1].slice(4, 6).toLowerCase();
 	document.documentElement.style.setProperty(
-		"--theme-color",
-		uiSettings.themeColor || "#00c9a7",
+		"--theme-chroma-scale",
+		resetIsAchromatic ? "0" : "1",
 	);
 	requestAnimationFrame(refreshAllRangeProgress);
 }
