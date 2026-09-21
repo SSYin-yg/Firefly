@@ -80,6 +80,13 @@ export const siteConfig: SiteConfig = {
 		},
 		navbarMode: "dynamic",
 	},
+	// Markdown Callout 配置：astro.config.mjs 会读取此节点
+	post: {
+		rehypeCallouts: {
+			theme: "github",
+			enablePythonMarkdownAdmonitions: true,
+		},
+	},
 	lang: SITE_LANG,
 	pages,
 } as unknown as SiteConfig;
