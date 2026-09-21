@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+
+backend:
+  name: github
+  repo: SSYin-yg/Firefly
+  branch: master
+  # base_url will be added after deploying the Auth Worker
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "posts"
+    label: "文章"
+    label_singular: "文章"
+    folder: "src/content/posts"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "yaml-frontmatter"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "发布日期", name: "published", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "描述", name: "description", widget: "text", required: false }
+      - { label: "封面图", name: "image", widget: "image", required: false }
+      - { label: "标签", name: "tags", widget: "list", required: false }
+      - { label: "分类", name: "category", widget: "string", required: false }
+      - { label: "草稿", name: "draft", widget: "boolean", default: false }
+      - { label: "置顶", name: "pinned", widget: "boolean", default: false }
+      - { label: "允许评论", name: "comment", widget: "boolean", default: true }
+      - { label: "正文", name: "body", widget: "markdown" }
+
+  - name: "dynamic"
+    label: "动态"
+    label_singular: "动态"
+    folder: "src/content/dynamic"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{hour}}{{minute}}{{second}}"
+    extension: "md"
+    format: "yaml-frontmatter"
+    fields:
+      - { label: "发布日期", name: "published", widget: "datetime" }
+      - { label: "置顶", name: "pinned", widget: "boolean", default: false }
+      - { label: "位置", name: "location", widget: "string", required: false }
+      - { label: "内容", name: "body", widget: "markdown" }
