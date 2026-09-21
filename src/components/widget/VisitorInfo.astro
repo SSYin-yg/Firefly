@@ -21,17 +21,7 @@ const showTitle = widgetConfig?.showTitle !== false;
   style={style}
 >
   <div class="visitor-info-content" data-state="loading">
-    <div class="visitor-info-loading" aria-live="polite">
-      <span class="visitor-info-spinner"></span>
-      <span>正在获取访客信息…</span>
-    </div>
-
-    <div class="visitor-info-error hidden" aria-live="polite">
-      <Icon name="material-symbols:cloud-off-outline" class="text-[1.15rem] shrink-0 text-(--primary)" />
-      <span>访客信息暂时无法获取</span>
-    </div>
-
-    <div class="visitor-info-data hidden">
+    <div class="visitor-info-data">
       <div class="visitor-info-grid">
         <div class="visitor-info-item visitor-info-item-wide">
           <div class="visitor-info-icon">
@@ -239,8 +229,7 @@ const showTitle = widgetConfig?.showTitle !== false;
     const data = root.querySelector(".visitor-info-data");
     if (!data) return;
 
-    // User Agent / 设备 / 浏览器属于浏览器本地信息，不依赖第三方 API。
-    // 先展示这部分，即使 IP 地理服务临时不可用，部件也不会整体失败。
+    // User Agent / 设备 / 浏览器属于浏览器本地信息，不依赖网络 API。
     const localUa = navigator.userAgent || "—";
 
     const setText = (selector: string, value: string) => {
@@ -289,7 +278,6 @@ const showTitle = widgetConfig?.showTitle !== false;
 
       try {
         // 使用本站同源 Cloudflare Worker，直接读取 Cloudflare request.cf。
-        // 不再依赖第三方浏览器 CORS/API，因此不会被 ipapi/ip.sb 的跨域策略或网络拦截影响。
         const response = await fetch("/api/visitor-info", {
           method: "GET",
           headers: { Accept: "application/json" },
