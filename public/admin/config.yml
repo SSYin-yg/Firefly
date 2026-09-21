@@ -6,8 +6,10 @@ backend:
   branch: master
   base_url: https://cms.ssyin033.top
 
-media_folder: "public/assets/images"
-public_folder: "/assets/images"
+# 包含 public 下所有图片（assets、gallery、favicon、pio 等）
+# 子文件夹会作为分类显示
+media_folder: "public"
+public_folder: "/"
 
 collections:
   - name: "posts"
