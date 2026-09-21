@@ -261,8 +261,10 @@ const showTitle = widgetConfig?.showTitle !== false;
     utc_offset?: string;
     latitude?: number;
     longitude?: number;
-    asn?: string;
+    asn?: string | number;
     org?: string;
+    isp?: string;
+    organization?: string;
   };
 
   const setupVisitorInfo = (root: Element) => {
