@@ -357,12 +357,13 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
         baseUrl: import.meta.env.BASE_URL,
         cardTransparentOpacity: backgroundWallpaper.overlay?.cardOpacity ?? 0.6,
         fullscreenLayout,
+        cmsUiSettingsSignature: JSON.stringify(uiSettings),
       }}
     >
       // 后台“界面设置”是站点默认值；当 uiSettings.json 发生变化时，
       // 清除旧浏览器的运行时覆盖，确保新的后台默认设置真正生效。
       // 这样用户无需手动清理 localStorage，也不会继续被旧偏好覆盖。
-      const uiSettingsSignature = "{\"themeColor\":\"#39c5bb\",\"defaultMode\":\"system\",\"pageWidth\":100,\"cardBorder\":false,\"cardFollowTheme\":false,\"sidebarPosition\":\"left\",\"tabletSidebar\":\"left\",\"hideSidebarOnPostPage\":false,\"wallpaperMode\":\"banner\",\"themeHue\":165}";
+      const uiSettingsSignature = cmsUiSettingsSignature;
       const UI_SETTINGS_STORAGE_KEY = "firefly-ui-settings-signature";
       const RUNTIME_SETTING_KEYS = [
         "theme",
