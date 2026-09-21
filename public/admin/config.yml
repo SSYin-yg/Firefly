@@ -4,7 +4,7 @@ backend:
   name: github
   repo: SSYin-yg/Firefly
   branch: master
-  # base_url will be added after deploying the Auth Worker
+  base_url: https://cms.ssyin033.top
 
 media_folder: "public/images"
 public_folder: "/images"
