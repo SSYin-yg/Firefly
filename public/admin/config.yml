@@ -6,8 +6,8 @@ backend:
   branch: master
   base_url: https://cms.ssyin033.top
 
-media_folder: "public/images"
-public_folder: "/images"
+media_folder: "public/assets/images"
+public_folder: "/assets/images"
 
 collections:
   - name: "posts"
