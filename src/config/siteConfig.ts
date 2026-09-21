@@ -28,6 +28,7 @@ function hexToHue(hex: string): number {
 	return Math.round(h) % 360;
 }
 
+// 定义站点语言
 const SITE_LANG = resolveSiteLang("zh_CN");
 
 const pages = resolvePageToggles({
@@ -49,8 +50,16 @@ export const siteConfig: SiteConfig = {
 	subtitle: "Demo site",
 	site_url: "https://firefly.ssyin033.top",
 	description:
-		"Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。",
-	keywords: ["Firefly", "Fuwari", "Astro", "ACGN", "博客", "技术博客", "静态博客"],
+		"Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。",
+	keywords: [
+		"Firefly",
+		"Fuwari",
+		"Astro",
+		"ACGN",
+		"博客",
+		"技术博客",
+		"静态博客",
+	],
 	themeColor: {
 		hue: hexToHue(uiSettings.themeColor || "#00c9a7"),
 		defaultMode: (uiSettings.defaultMode as "light" | "dark" | "system") || "system",
@@ -65,9 +74,5 @@ export const siteConfig: SiteConfig = {
 			src: "/favicon/firefly-32.png",
 		},
 	],
-	navbar: {
-		logo: { type: "icon", value: "material-symbols:home-pin-outline" },
-	},
 	pages,
-	lang: SITE_LANG,
-} as SiteConfig;
+} as unknown as SiteConfig;
