@@ -1,0 +1,11 @@
+{
+  "themeHue": 165,
+  "defaultMode": "system",
+  "pageWidth": 100,
+  "cardBorder": false,
+  "cardFollowTheme": false,
+  "sidebarPosition": "both",
+  "tabletSidebar": "left",
+  "hideSidebarOnPostPage": false,
+  "wallpaperMode": "banner"
+}
