@@ -9,6 +9,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 	noSidebarContentWidth: 0.6,
 	leftComponents: [
 		{ type: "profile", enable: true, position: "top", showOnPostPage: true },
+		{ type: "visitorInfo", enable: true, position: "top", showOnPostPage: true },
 		{ type: "announcement", enable: true, position: "top", showOnPostPage: true },
 		{ type: "music", enable: true, position: "top", showOnPostPage: true },
 		{ type: "categories", enable: true, position: "sticky", showOnPostPage: true, specificConfig: { collapseThreshold: 5 } },
