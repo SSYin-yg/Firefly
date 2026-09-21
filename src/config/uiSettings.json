@@ -1,11 +1,12 @@
 {
-  "themeHue": 165,
+  "themeColor": "#39c5bb",
   "defaultMode": "system",
   "pageWidth": 100,
   "cardBorder": false,
   "cardFollowTheme": false,
-  "sidebarPosition": "left",
+  "sidebarPosition": "both",
   "tabletSidebar": "left",
   "hideSidebarOnPostPage": false,
-  "wallpaperMode": "banner"
+  "wallpaperMode": "banner",
+  "themeHue": 165
 }
