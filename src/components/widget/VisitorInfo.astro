@@ -271,6 +271,10 @@ const showTitle = widgetConfig?.showTitle !== false;
     const data = root.querySelector(".visitor-info-data");
     if (!loading || !error || !data) return;
 
+    // User Agent / 设备 / 浏览器属于浏览器本地信息，不依赖第三方 API。
+    // 先展示这部分，即使 IP 地理服务临时不可用，部件也不会整体失败。
+    const localUa = navigator.userAgent || "—";
+
     const setText = (selector: string, value: string) => {
       const el = root.querySelector(selector) as HTMLElement | null;
       if (!el) return;
@@ -305,21 +309,30 @@ const showTitle = widgetConfig?.showTitle !== false;
     };
 
     const load = async () => {
+      const ua = localUa;
+
+      // 先立即展示无需 API 的访客环境信息。
+      setText(".visitor-device", `${detectDevice(ua)} / ${detectOs(ua)}`);
+      setText(".visitor-browser", detectBrowser(ua));
+      setText(".visitor-user-agent", ua);
+
       const controller = new AbortController();
       const timer = window.setTimeout(() => controller.abort(), 6000);
 
       try {
-        const response = await fetch("https://ipapi.co/json/", {
+        // IP.SB 官方 API 明确支持 CORS，可直接在浏览器端调用；
+        // /geoip 无参数时返回当前访客公网 IP 与网络级地理位置。
+        const response = await fetch("https://api.ip.sb/geoip", {
           method: "GET",
           headers: { Accept: "application/json" },
           signal: controller.signal,
           credentials: "omit",
+          mode: "cors",
         });
 
         if (!response.ok) throw new Error("IP location request failed");
 
         const result = (await response.json()) as IpLocation;
-        const ua = navigator.userAgent || "—";
         const locationParts = [result.country_name, result.region, result.city]
           .filter(Boolean)
           .join(" / ");
@@ -329,20 +342,20 @@ const showTitle = widgetConfig?.showTitle !== false;
             ? `${result.latitude}, ${result.longitude}`
             : "";
 
-        const network = [result.asn, result.org].filter(Boolean).join(" · ");
+        const network = [
+          result.asn ? `AS${result.asn}` : "",
+          result.isp,
+          result.organization,
+        ]
+          .filter(Boolean)
+          .join(" · ");
 
         setText(".visitor-ip", result.ip || "—");
         setText(".visitor-location", locationParts || "—");
-        setText(".visitor-timezone", result.timezone || result.utc_offset || "—");
-        setText(
-          ".visitor-device",
-          `${detectDevice(ua)} / ${detectOs(ua)}`,
-        );
-        setText(".visitor-browser", detectBrowser(ua));
-        setText(".visitor-user-agent", ua);
+        setText(".visitor-timezone", result.timezone || "—");
         setText(
           ".visitor-network",
-          network || coordinates || "—",
+          network || coordinates || result.isp || result.organization || "—",
         );
 
         if (coordinates) {
@@ -360,9 +373,15 @@ const showTitle = widgetConfig?.showTitle !== false;
         data.classList.remove("hidden");
         root.querySelector(".visitor-info-content")?.setAttribute("data-state", "ready");
       } catch {
+        // 地理 API 失败时仍保留本地浏览器信息，并把网络字段标记为暂不可用。
+        setText(".visitor-ip", "暂不可用");
+        setText(".visitor-location", "暂不可用");
+        setText(".visitor-timezone", "暂不可用");
+        setText(".visitor-network", "暂不可用");
         loading.classList.add("hidden");
-        error.classList.remove("hidden");
-        root.querySelector(".visitor-info-content")?.setAttribute("data-state", "error");
+        data.classList.remove("hidden");
+        error.classList.add("hidden");
+        root.querySelector(".visitor-info-content")?.setAttribute("data-state", "partial");
       } finally {
         window.clearTimeout(timer);
       }
