@@ -6,13 +6,10 @@ backend:
   branch: master
   base_url: https://cms.ssyin033.top
 
-# 前端栶壁纸、头像、logo 等栶主要在 src/assets/images
-# 新上传的图片也会保存到这里
 media_folder: "src/assets/images"
 public_folder: "/src/assets/images"
 
 collections:
-  # 文章
   - name: "posts"
     label: "文章"
     label_singular: "文章"
@@ -34,7 +31,6 @@ collections:
       - { label: "允许评论", name: "comment", widget: "boolean", default: true }
       - { label: "正文", name: "body", widget: "markdown" }
 
-  # 动态
   - name: "dynamic"
     label: "动态"
     label_singular: "动态"
@@ -50,7 +46,6 @@ collections:
       - { label: "位置", name: "location", widget: "string", required: false }
       - { label: "内容", name: "body", widget: "markdown" }
 
-  # 界面设置（下拉 + 调色）
   - name: "ui-settings"
     label: "界面设置"
     label_singular: "设置"
@@ -62,13 +57,11 @@ collections:
         file: "src/config/uiSettings.json"
         format: "json"
         fields:
-          - label: "主题色相 (0-360)"
-            name: "themeHue"
-            widget: "number"
-            min: 0
-            max: 360
-            step: 1
-            hint: "红色0，青色200，蓝绿250，粉色345，当前默认165"
+          - label: "主题色"
+            name: "themeColor"
+            widget: "color"
+            allowInput: true
+            hint: "点击可打开拾色器选择主题色"
 
           - label: "默认亮暗模式"
             name: "defaultMode"
