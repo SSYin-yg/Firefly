@@ -48,6 +48,7 @@ import {
 	setWavesEnabled,
 } from "@utils/setting-utils";
 import { onMount } from "svelte";
+import uiSettings from "@/config/uiSettings.json";
 import Icon from "@/components/common/Icon.svelte";
 import {
 	backgroundWallpaper,
@@ -320,7 +321,13 @@ let hasVisibleOverlaySlider = $derived(
 );
 
 function resetHue() {
+	localStorage.removeItem("hue");
 	hue = getDefaultHue();
+	document.documentElement.style.setProperty("--hue", String(defaultHue));
+	document.documentElement.style.setProperty(
+		"--theme-color",
+		uiSettings.themeColor || "#00c9a7",
+	);
 	requestAnimationFrame(refreshAllRangeProgress);
 }
 
@@ -626,12 +633,6 @@ onMount(() => {
 });
 
 $effect(() => {
-	if (hue || hue === 0) {
-		setHue(hue);
-	}
-});
-
-$effect(() => {
 	if (wallpaperMode === WALLPAPER_OVERLAY) {
 		if (isOverlayOpacitySwitchable) {
 			setOverlayOpacity(overlayOpacity);
@@ -702,6 +703,7 @@ $effect(() => {
 			</div>
 			<div class="hue-slider-shell w-full h-6 px-1 bg-[oklch(0.80_0.10_0)] dark:bg-[oklch(0.70_0.10_0)] rounded-md select-none">
 				<input aria-label={i18n(I18nKey.themeColor)} type="range" min="0" max="360" bind:value={hue}
+					oninput={(event) => setHue(Number((event.currentTarget as HTMLInputElement).value))}
 					   class="slider" id="colorSlider" step="5" style="width: 100%">
 			</div>
 		</div>
