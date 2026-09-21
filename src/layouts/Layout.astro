@@ -358,6 +358,7 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
         cardTransparentOpacity: backgroundWallpaper.overlay?.cardOpacity ?? 0.6,
         fullscreenLayout,
         cmsUiSettingsSignature: JSON.stringify(uiSettings),
+        cmsThemeColor: uiSettings.themeColor || "#00c9a7",
       }}
     >
       // 后台“界面设置”是站点默认值；当 uiSettings.json 发生变化时，
@@ -433,8 +434,16 @@ const ogImageAlt = propsOgImageAlt ?? pageTitle;
       );
 
       // Load the hue from local storage
-      const hue = localStorage.getItem("hue") || configHue;
+      const storedHue = localStorage.getItem("hue");
+      const hue = storedHue || configHue;
       document.documentElement.style.setProperty("--hue", hue);
+
+      // 默认情况下 1:1 使用 CMS 调色盘中的 HEX 颜色；
+      // 用户在前台拖动 Hue 后，切换到与原设置面板一致的动态 OKLCH 主色。
+      const resolvedThemeColor = storedHue
+        ? "oklch(0.70 0.14 " + storedHue + ")"
+        : cmsThemeColor;
+      document.documentElement.style.setProperty("--theme-color", resolvedThemeColor);
 
       // 设置卡片透明度（全屏透明模式下使用），优先使用用户自定义值
       const storedCardOpacity = localStorage.getItem("overlayCardOpacity");
